@@ -18,28 +18,15 @@ int calculate_heuristic(string present_mat[][SIZE_OF_MAT])
     {
         for (int j = 0; j < SIZE_OF_MAT; j++)
         {
-            int pos_x = -1, pos_y = -1;
-            for (int k = 0; k < SIZE_OF_MAT; k++)
+            if (present_mat[i][j] != final_state[i][j])
             {
-                for (int l = 0; l < SIZE_OF_MAT; l++)
-                {
-                    if (present_mat[i][j] == final_state[k][l])
-                    {
-                        pos_x = k;
-                        pos_y = l;
-                        break;
-                    }
-                }
-                if (pos_x != -1)
-                {
-                    break;
-                }
+                h_r++;
             }
-            h_r += (abs(i - pos_x) + abs(j - pos_y));
         }
     }
     return h_r;
 }
+
 
 struct node
 {
