@@ -203,6 +203,7 @@ void show_the_path(node *final_s)
 int main()
 {
     int count = 0;
+    cout<<"Output will be written in 'Output h2.txt'"<<endl;
     freopen("Output h2.txt", "w", stdout);
     string start_matrix[SIZE_OF_MAT][SIZE_OF_MAT];
     for (int i = 0; i < SIZE_OF_MAT; i++)
