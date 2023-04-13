@@ -1,0 +1,65 @@
+Successfully reached final state.
+
+Initial State: 
+1 2 3 
+B 4 5 
+6 7 8 
+
+Final State: 
+2 3 5 
+6 1 8 
+4 7 B 
+
+Number of states explored: 26
+Total number of states to optimal path: 11
+
+Optimal path to the final state: 
+1 2 3 
+B 4 5 
+6 7 8 
+
+B 2 3 
+1 4 5 
+6 7 8 
+
+2 B 3 
+1 4 5 
+6 7 8 
+
+2 3 B 
+1 4 5 
+6 7 8 
+
+2 3 5 
+1 4 B 
+6 7 8 
+
+2 3 5 
+1 4 8 
+6 7 B 
+
+2 3 5 
+1 4 8 
+6 B 7 
+
+2 3 5 
+1 B 8 
+6 4 7 
+
+2 3 5 
+B 1 8 
+6 4 7 
+
+2 3 5 
+6 1 8 
+B 4 7 
+
+2 3 5 
+6 1 8 
+4 B 7 
+
+2 3 5 
+6 1 8 
+4 7 B 
+
+Time taken for execution: 0.004
