@@ -12,6 +12,7 @@ using namespace std;
 #define SIZE_OF_MAT 3
 string final_state[SIZE_OF_MAT][SIZE_OF_MAT];
 
+/*Calculate heuristic function calculates the number of misplaced tiles and returns it*/
 int calculate_heuristic(string present_mat[][SIZE_OF_MAT])
 {
     int h_r = 0;
@@ -28,6 +29,13 @@ int calculate_heuristic(string present_mat[][SIZE_OF_MAT])
     return h_r;
 }
 
+/*Each node has the following information:
+    1.The matrix
+    2.The heuristic value of the matrix
+    3.The parent node from which it is originating
+    4.A vector containing address to every child node
+    5.initialized_when calculates cost of the shortest path from start node to present node.
+*/
 struct node
 {
     string matrix[SIZE_OF_MAT][SIZE_OF_MAT];
@@ -55,6 +63,8 @@ struct node
     }
 };
 
+/*Class information is created to be added in the priority queue which will be made later*/
+
 class information
 {
 public:
@@ -68,6 +78,8 @@ public:
     }
 };
 
+/*Comparision has function operator which will be used to sort the queue on the basis of the heuristic of the node*/
+
 struct Comparision
 {
     bool operator()(const information &a, information &b) const
@@ -76,8 +88,10 @@ struct Comparision
     }
 };
 
+/*Priority Queue PQ created*/
 priority_queue<information, vector<information>, Comparision> PQ;
 
+/*The matrix is converted to a string to make cycle checking easy*/
 string convert_to_string(string arr[][SIZE_OF_MAT])
 {
     string s = "";
@@ -91,6 +105,7 @@ string convert_to_string(string arr[][SIZE_OF_MAT])
     return s;
 }
 
+/*class Tree creates a tree of nodes and also has a set containing all nodes visited till now*/
 class Tree
 {
 private:
@@ -99,6 +114,7 @@ private:
 
 public:
     node *start_state;
+    /*Creates tree with Start state as the root node*/
     Tree(string start_matrix[][SIZE_OF_MAT])
     {
         start_state = new node(start_matrix, nullptr);
@@ -107,6 +123,7 @@ public:
         visited_states.insert(convert_to_string(start_matrix));
     }
 
+    /*Adds child node with the inputted matrix and also pushes it into the visited_set*/
     void add_children(string temp_arr[][SIZE_OF_MAT], node *par)
     {
         if (visited_states.find(convert_to_string(temp_arr)) == visited_states.end())
@@ -119,6 +136,9 @@ public:
             PQ.push(information(temp->heuristic, temp));
         }
     }
+
+    /*Checks all the possible next states and adds them into the children vector of the present node if and
+    only if the heuristic of the children node is less than that of parent*/
     void what_next(node *parent)
     {
         int pos_of_B_x = -1, pos_of_B_y = -1;
@@ -183,6 +203,9 @@ public:
     }
 };
 
+/*Once the goal node is reached, to get the shortest path from start to goal,
+  we stack nodes as we move from final state to initial state and output the
+  path later.*/
 void show_the_path(node *final_s)
 {
     stack<node *> path;
@@ -207,6 +230,7 @@ void show_the_path(node *final_s)
     }
 }
 
+/*Main function*/
 int main()
 {
     int count = 0;
@@ -234,6 +258,7 @@ int main()
     {
         if (PQ.top().heuristic == 0)
         {
+            /*Shows all the required information if goal state is reached*/
             cout << "Successfully reached final state.\n"
                  << endl;
             cout << "Initial State: " << endl;
@@ -263,11 +288,13 @@ int main()
             cout << "Time taken for execution: " << (double)(clock() - tStart) / CLOCKS_PER_SEC << endl;
             return 0;
         }
+         /*Else see what nodes can be considered later*/
         count++;
         node *temp_state = PQ.top().state;
         PQ.pop();
         t.what_next(temp_state);
     }
+    /*Returns all the required information if final state is not reached*/
     cout << "Didn't reach the final state \n"<< endl;
     cout << "Initial State: " << endl;
     for (int i = 0; i < SIZE_OF_MAT; i++)
